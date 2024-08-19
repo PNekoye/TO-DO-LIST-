@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Tasks</title>
+        <style>
+            body {
+                font-family: sans-serif;
+            }
+            
+            .container {
+                width: 400px;
+                margin: 50px auto;
+                padding: 20px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+            
+            input[type="text"] {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+            
+            button, input[type="submit"] {
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            
+            ul {
+                list-style: none;
+                padding: 0;
+            }
+            
+            li {
+                padding: 10px;
+                border-bottom: 1px solid #ccc;
+            }
+            
+            .completed {
+                text-decoration: line-through;
+                color: gray;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Tasks</h1>
+            <ul id="tasks"></ul>
+            <form>
+                <input id="task" placeholder="New Task" type="text">
+                <input id="submit" type="submit">
+            </form>
+        </div>
+
+        <script>
+            // Query for the submit button and input task field once and store them in variables
+            const submit = document.getElementById('submit');
+            const newTask = document.getElementById('task');
+
+            // Disable the submit button by default
+            submit.disabled = true;
+
+            // Listen for input to be typed into the input field
+            newTask.addEventListener('input', function () {
+                // Enable/disable the submit button based on the input field's value
+                submit.disabled = newTask.value.trim() === '';
+            });
+
+            // Listen for submission of the form
+            document.querySelector('form').addEventListener('submit', function (event) {
+                // Prevent the default form submission
+                event.preventDefault();
+
+                // Find the task the user just submitted
+                const taskValue = newTask.value.trim();
+
+                if (taskValue) {
+                    // Create a list item for the new task
+                    const listItem = document.createElement('li');
+                    listItem.textContent = taskValue;
+
+                    // Add the new element to our unordered list
+                    document.getElementById('tasks').append(listItem);
+
+                    // Clear the input field after adding the task
+                    newTask.value = '';
+                    
+                    // Disable the submit button again
+                    submit.disabled = true;
+                }
+
+                // Return false to prevent default form submission behavior
+                return false;
+            });
+        </script>
+    </body>
+</html>
